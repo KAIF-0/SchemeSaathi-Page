@@ -33,7 +33,7 @@ export default function Home() {
         </BlurFade>
 
         <BlurFade delay={0.2}>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl max-w-5xl font-display font-black leading-[1.1] tracking-tight text-balance text-foreground">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl max-w-5xl font-display font-black leading-[1.1] tracking-tighter text-balance text-foreground uppercase">
             Discover Government Schemes Meant For You — <span className="text-gradient">Instantly</span>
           </h1>
         </BlurFade>
@@ -84,11 +84,11 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, idx) => (
               <BlurFade key={idx} delay={idx * 0.1} inView>
-                <div className="glass-panel rounded-3xl p-8 h-full flex flex-col items-start hover:-translate-y-2 transition-transform duration-300 group">
+                <div className="glass-panel rounded-3xl p-8 h-full flex flex-col items-start hover-lift transition-all duration-300 group">
                   <div className="w-14 h-14 rounded-2xl bg-secondary/20 flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all">
                     <feature.icon className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-3">{feature.title}</h3>
+                  <h3 className="text-2xl font-black uppercase text-foreground mb-3">{feature.title}</h3>
                   <p className="text-muted-foreground text-lg leading-relaxed">{feature.desc}</p>
                 </div>
               </BlurFade>

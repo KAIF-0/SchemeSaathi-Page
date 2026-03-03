@@ -1,56 +1,161 @@
 import { motion } from "framer-motion";
-import { UserCircle, BrainCircuit, FileText, Sparkles, MessageCircle } from "lucide-react";
+import { 
+  Database, 
+  FileText, 
+  MessageSquare, 
+  Search, 
+  Layout, 
+  Cpu, 
+  User,
+  Share2
+} from "lucide-react";
+import React, { useRef } from "react";
+import { cn } from "@/lib/utils";
 
-const nodes = [
-  { id: 1, label: "User Profile", icon: UserCircle, desc: "Zero-form inputs" },
-  { id: 2, label: "Semantic Match", icon: BrainCircuit, desc: "AI-driven analysis" },
-  { id: 3, label: "Document Parse", icon: FileText, desc: "Real-time verification" },
-  { id: 4, label: "Recommendation", icon: Sparkles, desc: "Highly accurate curation" },
-  { id: 5, label: "WhatsApp Delivery", icon: MessageCircle, desc: "Instant hyper-local alerts" },
-];
+const Circle = React.forwardRef<
+  HTMLDivElement,
+  { className?: string; children?: React.ReactNode }
+>(({ className, children }, ref) => {
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 border-border bg-white p-3 shadow-[0_8px_16px_rgba(0,0,0,0.08)]",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+});
+
+Circle.displayName = "Circle";
 
 export function AnimatedProcessBeam() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const div1Ref = useRef<HTMLDivElement>(null);
+  const div2Ref = useRef<HTMLDivElement>(null);
+  const div3Ref = useRef<HTMLDivElement>(null);
+  const div4Ref = useRef<HTMLDivElement>(null);
+  const div5Ref = useRef<HTMLDivElement>(null);
+  const div6Ref = useRef<HTMLDivElement>(null);
+  const div7Ref = useRef<HTMLDivElement>(null);
+
   return (
-    <div className="relative w-full max-w-5xl mx-auto py-12 px-4">
-      {/* Connecting Line Background */}
-      <div className="absolute top-1/2 left-0 w-full h-1 bg-border -translate-y-1/2 hidden md:block rounded-full overflow-hidden">
-        <motion.div 
-          className="h-full bg-gradient-to-r from-primary via-secondary to-primary w-1/3"
-          animate={{ x: ["-100%", "300%"] }}
-          transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-        />
+    <div
+      className="relative flex h-[500px] w-full items-center justify-center overflow-hidden bg-background p-10"
+      ref={containerRef}
+    >
+      <div className="flex h-full w-full flex-row items-stretch justify-between gap-10 max-w-4xl">
+        <div className="flex flex-col justify-center gap-6">
+          <Circle ref={div1Ref}>
+            <Database className="h-6 w-6 text-muted-foreground" />
+          </Circle>
+          <Circle ref={div2Ref}>
+            <FileText className="h-6 w-6 text-muted-foreground" />
+          </Circle>
+          <Circle ref={div3Ref}>
+            <MessageSquare className="h-6 w-6 text-muted-foreground" />
+          </Circle>
+          <Circle ref={div4Ref}>
+            <Search className="h-6 w-6 text-muted-foreground" />
+          </Circle>
+          <Circle ref={div5Ref}>
+            <Layout className="h-6 w-6 text-muted-foreground" />
+          </Circle>
+        </div>
+        <div className="flex flex-col justify-center">
+          <Circle ref={div6Ref} className="h-24 w-24 border-primary/20 bg-white">
+            <Cpu className="h-12 w-12 text-primary animate-pulse" />
+          </Circle>
+        </div>
+        <div className="flex flex-col justify-center">
+          <Circle ref={div7Ref}>
+            <User className="h-6 w-6 text-primary" />
+          </Circle>
+        </div>
       </div>
 
-      <div className="absolute left-1/2 top-0 h-full w-1 bg-border -translate-x-1/2 md:hidden rounded-full overflow-hidden">
-        <motion.div 
-          className="w-full bg-gradient-to-b from-primary via-secondary to-primary h-1/3"
-          animate={{ y: ["-100%", "300%"] }}
-          transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-        />
-      </div>
-
-      {/* Nodes */}
-      <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-4">
-        {nodes.map((node, index) => (
-          <motion.div 
-            key={node.id}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.2 }}
-            className="flex flex-col items-center text-center group w-full md:w-auto"
-          >
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-card border-2 border-primary/20 rounded-2xl flex items-center justify-center shadow-lg group-hover:border-primary group-hover:shadow-primary/20 transition-all duration-300 group-hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <node.icon className="w-8 h-8 md:w-10 md:h-10 text-primary relative z-10" />
-            </div>
-            <div className="mt-4 bg-background/80 backdrop-blur-sm px-3 py-1 rounded-lg">
-              <h4 className="font-bold text-foreground text-sm md:text-base whitespace-nowrap">{node.label}</h4>
-              <p className="text-xs text-muted-foreground mt-1 hidden md:block whitespace-nowrap">{node.desc}</p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      {/* SVG Beams */}
+      <svg
+        className="absolute inset-0 h-full w-full pointer-events-none"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        <Beam containerRef={containerRef} fromRef={div1Ref} toRef={div6Ref} />
+        <Beam containerRef={containerRef} fromRef={div2Ref} toRef={div6Ref} />
+        <Beam containerRef={containerRef} fromRef={div3Ref} toRef={div6Ref} />
+        <Beam containerRef={containerRef} fromRef={div4Ref} toRef={div6Ref} />
+        <Beam containerRef={containerRef} fromRef={div5Ref} toRef={div6Ref} />
+        <Beam containerRef={containerRef} fromRef={div6Ref} toRef={div7Ref} />
+      </svg>
     </div>
+  );
+}
+
+function Beam({ 
+  containerRef, 
+  fromRef, 
+  toRef 
+}: { 
+  containerRef: React.RefObject<HTMLDivElement>, 
+  fromRef: React.RefObject<HTMLDivElement>, 
+  toRef: React.RefObject<HTMLDivElement> 
+}) {
+  const [path, setPath] = React.useState("");
+
+  React.useEffect(() => {
+    const updatePath = () => {
+      if (!containerRef.current || !fromRef.current || !toRef.current) return;
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const fromRect = fromRef.current.getBoundingClientRect();
+      const toRect = toRef.current.getBoundingClientRect();
+
+      const startX = ((fromRect.left + fromRect.width / 2) - containerRect.left) / containerRect.width * 100;
+      const startY = ((fromRect.top + fromRect.height / 2) - containerRect.top) / containerRect.height * 100;
+      const endX = ((toRect.left + toRect.width / 2) - containerRect.left) / containerRect.width * 100;
+      const endY = ((toRect.top + toRect.height / 2) - containerRect.top) / containerRect.height * 100;
+
+      const ctrlX = (startX + endX) / 2;
+      setPath(`M ${startX} ${startY} C ${ctrlX} ${startY}, ${ctrlX} ${endY}, ${endX} ${endY}`);
+    };
+
+    updatePath();
+    window.addEventListener('resize', updatePath);
+    return () => window.removeEventListener('resize', updatePath);
+  }, [containerRef, fromRef, toRef]);
+
+  return (
+    <>
+      <path
+        d={path}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="0.2"
+        className="text-border"
+      />
+      <motion.path
+        d={path}
+        fill="none"
+        stroke="url(#gradient)"
+        strokeWidth="0.4"
+        strokeLinecap="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: [0, 1, 0] }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: Math.random() * 2
+        }}
+      />
+      <defs>
+        <linearGradient id="gradient" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="var(--primary)" stopOpacity="0" />
+          <stop offset="50%" stopColor="var(--primary)" stopOpacity="1" />
+          <stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+    </>
   );
 }
