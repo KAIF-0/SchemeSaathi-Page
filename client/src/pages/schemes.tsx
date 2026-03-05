@@ -1,12 +1,30 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSchemes } from "@/hooks/use-schemes";
 import BlurFade from "@/components/ui/blur-fade";
 import { Search, Filter, ExternalLink, Loader2, AlertCircle } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@shared/routes";
 
 export default function SchemesPage() {
-  const { data: schemes, isLoading, error } = useSchemes();
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(searchQuery), 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  const { data: schemes, isLoading, error } = useQuery({
+    queryKey: [api.schemes.list.path, debouncedSearch],
+    queryFn: async () => {
+      const url = new URL(api.schemes.list.path, window.location.origin);
+      if (debouncedSearch) url.searchParams.set("search", debouncedSearch);
+      const res = await fetch(url.toString());
+      if (!res.ok) throw new Error("Failed to fetch");
+      return res.json() as Promise<any[]>;
+    }
+  });
 
   // Extract unique tags for filtering
   const allTags = useMemo(() => {
@@ -20,12 +38,10 @@ export default function SchemesPage() {
   const filteredSchemes = useMemo(() => {
     if (!schemes) return [];
     return schemes.filter(scheme => {
-      const matchesSearch = scheme.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                            scheme.desc.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesTag = selectedTag ? scheme.tags.includes(selectedTag) : true;
-      return matchesSearch && matchesTag;
+      return matchesTag;
     });
-  }, [schemes, searchQuery, selectedTag]);
+  }, [schemes, selectedTag]);
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-24">

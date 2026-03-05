@@ -11,7 +11,8 @@ export async function registerRoutes(
 ): Promise<Server> {
   // GET /api/schemes
   app.get(api.schemes.list.path, async (req, res) => {
-    const allSchemes = await storage.getSchemes();
+    const search = req.query.search as string | undefined;
+    const allSchemes = await storage.getSchemes(search);
     res.status(200).json(allSchemes);
   });
 
