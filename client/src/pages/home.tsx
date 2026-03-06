@@ -1,22 +1,18 @@
-import { useState } from "react";
 import BlurFade from "@/components/ui/blur-fade";
-import { VideoModal } from "@/components/ui/video-modal";
 import { AnimatedProcessBeam } from "@/components/ui/animated-process-beam";
-import { MessageCircle, Play, Mic, FileText, ShieldCheck, Languages, MapPin, Bell } from "lucide-react";
+import { MessageCircle, Mic, FileText, ShieldCheck, Languages, MapPin, Bell } from "lucide-react";
 
 export default function Home() {
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
-
   const features = [
     { icon: Mic, title: "Voice-first AI", desc: "Interact naturally using voice commands instead of typing out long forms." },
-    { icon: FileText, title: "Zero-form profiling", desc: "We build your profile automatically from the documents and answers you provide." },
+    { icon: FileText, title: "WhatsApp-first profiling", desc: "Before recommendations, we ask your profile questions directly on WhatsApp and guide you step by step." },
     { icon: ShieldCheck, title: "Source-grounded accuracy", desc: "Every scheme recommendation is backed by verifiable government sources." },
     { icon: Languages, title: "Hyper-local translation", desc: "Communicate in your regional language seamlessly with native translation." },
     { icon: MapPin, title: "Step-by-step guidance", desc: "Know exactly where to go and what to do next to claim your benefits." },
-    { icon: Bell, title: "Proactive alerts", desc: "Get notified instantly when new schemes matching your profile are launched." },
+    { icon: Bell, title: "Continuously updated data", desc: "Schemes are refreshed from official government sources, so information stays valid and up to date." },
   ];
 
-  const techLogos = ["AWS", "OpenAI", "Pinecone", "LangChain", "Gemini", "Bhashini", "Twilio"];
+  const techLogos = ["AWS", "LangGraph", "Upstash", "Index", "LangChain", "Gemini", "Bhashini", "Twilio"];
 
   return (
     <div className="min-h-screen bg-warm-mesh pt-20">
@@ -54,15 +50,34 @@ export default function Home() {
             <MessageCircle className="w-6 h-6" />
             Chat on WhatsApp
           </a>
-          
-          <button
-            onClick={() => setIsVideoOpen(true)}
-            className="w-full sm:w-auto flex items-center justify-center gap-3 bg-white text-foreground hover:bg-muted border border-border rounded-full px-8 py-5 text-xl font-bold shadow-sm transition-all hover:-translate-y-1"
-          >
-            <Play className="w-5 h-5 fill-current" />
-            Watch How It Works
-          </button>
         </BlurFade>
+      </section>
+
+      {/* Demo Video Section */}
+      <section className="py-20 bg-background border-y border-border/70">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <BlurFade inView>
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">See SchemeSaathi in Action</h2>
+              <p className="mt-4 text-lg md:text-xl text-muted-foreground font-medium">
+                Quick walkthrough of WhatsApp-based profiling and scheme guidance.
+              </p>
+            </div>
+          </BlurFade>
+
+          <BlurFade delay={0.1} inView>
+            <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-border bg-black shadow-[0_20px_70px_rgba(0,0,0,0.18)]">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="SchemeSaathi Demo Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+          </BlurFade>
+        </div>
       </section>
 
       {/* Beam Animation Section */}
@@ -101,9 +116,12 @@ export default function Home() {
       <section className="py-20 bg-background border-t border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-8">Powered By Industry Leaders</p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60">
+          <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
             {techLogos.map((tech) => (
-              <div key={tech} className="text-2xl md:text-3xl font-display font-black text-foreground hover:text-primary hover:scale-110 transition-all cursor-default">
+              <div
+                key={tech}
+                className="px-5 py-3 rounded-2xl border border-border/70 bg-card/70 text-lg md:text-xl font-display font-black text-foreground hover:border-primary/50 hover:text-primary transition-all cursor-default"
+              >
                 {tech}
               </div>
             ))}
@@ -136,8 +154,6 @@ export default function Home() {
           </BlurFade>
         </div>
       </section>
-
-      <VideoModal isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)} />
     </div>
   );
 }
