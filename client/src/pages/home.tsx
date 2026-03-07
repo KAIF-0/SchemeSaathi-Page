@@ -69,7 +69,7 @@ export default function Home() {
             <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-border bg-black shadow-[0_20px_70px_rgba(0,0,0,0.18)]">
               <iframe
                 className="w-full h-full"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                src="https://www.youtube.com/embed/CmXMZQANbko"
                 title="SchemeSaathi Demo Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
